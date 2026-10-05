@@ -1,0 +1,5 @@
+oracleJdk-27/
+*.class
+.settings/
+.project
+.classpath
