@@ -13,6 +13,10 @@ public class SistemaAlmacen {
     }
 
     public boolean registrarProveedor(Proveedor p) {
+        // No se aceptan nulos ni IDs repetidos (romperían las búsquedas)
+        if (p == null || buscarProveedorPorId(p.getIdProveedor()) != null) {
+            return false;
+        }
         if (contadorProveedores < proveedores.length) {
             proveedores[contadorProveedores] = p;
             contadorProveedores++;
@@ -22,12 +26,23 @@ public class SistemaAlmacen {
     }
 
     public boolean registrarProducto(Producto p) {
+        if (p == null || buscarProductoPorId(p.getIdProducto()) != null) {
+            return false;
+        }
         if (contadorProductos < productos.length) {
             productos[contadorProductos] = p;
             contadorProductos++;
             return true;
         }
         return false;
+    }
+
+    public boolean hayEspacioProveedores() {
+        return contadorProveedores < proveedores.length;
+    }
+
+    public boolean hayEspacioProductos() {
+        return contadorProductos < productos.length;
     }
 
     public Proveedor buscarProveedorPorId(int id) {
@@ -75,8 +90,31 @@ public class SistemaAlmacen {
 
     public void listarProveedores() {
         System.out.println("\n--- LISTA DE PROVEEDORES ---");
+        if (contadorProveedores == 0) {
+            System.out.println("No hay proveedores registrados.");
+            return;
+        }
         for (int i = 0; i < contadorProveedores; i++) {
             System.out.println("ID: " + proveedores[i].getIdProveedor() + " | " + proveedores[i]);
         }
+    }
+
+    public void listarProductos() {
+        System.out.println("\n--- LISTA DE PRODUCTOS ---");
+        if (contadorProductos == 0) {
+            System.out.println("No hay productos registrados.");
+            return;
+        }
+        for (int i = 0; i < contadorProductos; i++) {
+            System.out.println(productos[i]);
+        }
+    }
+
+    public int getContadorProductos() {
+        return contadorProductos;
+    }
+
+    public int getContadorProveedores() {
+        return contadorProveedores;
     }
 }
