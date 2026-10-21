@@ -39,7 +39,11 @@ public class Producto {
 
     @Override
     public String toString() {
+        // Se evita NullPointerException si el producto no tiene proveedor
+        String datosProveedor = (proveedor != null) ? proveedor.toString() : "Sin proveedor";
+        // Precio con 2 decimales (antes se imprimía el double crudo, p. ej. 12.0 o 0.30000000000000004)
         return "ID: " + idProducto + " | Nombre: " + nombre + " | Stock: " + stock +
-               " | Precio: $" + precioCompra + " | Proveedor: [" + proveedor.toString() + "]";
+               " | Precio: $" + String.format("%.2f", precioCompra) +
+               " | Proveedor: [" + datosProveedor + "]";
     }
 }
